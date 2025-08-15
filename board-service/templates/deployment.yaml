@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "board-service.fullname" . }}
+  labels:
+    app: {{ include "board-service.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "board-service.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "board-service.name" . }}
+    spec:
+      serviceAccountName: {{ include "board-service.serviceAccountName" . }}
+      containers:
+        - name: board-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://{{ .Values.mysql.host }}:{{ .Values.mysql.port }}/{{ .Values.mysql.database }}?serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true
+            - name: SPRING_DATASOURCE_USERNAME
+              value: {{ .Values.mysql.username }}
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: {{ .Values.mysql.password }}

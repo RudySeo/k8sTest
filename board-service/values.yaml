@@ -1,0 +1,23 @@
+replicaCount: 1
+
+image:
+  repository: board-service
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+serviceAccount:
+  create: true
+  name: ""
+
+mysql:
+  host: mysql
+  port: 3306
+  database: board
+  username: root
+  password: root1234
+
+
