@@ -3,7 +3,7 @@ package com.example.board
 import jakarta.persistence.*
 
 @Entity
-data class Board(
+class Board(
 
     @Column(name = "board_id", nullable = true)
     var title: String,
