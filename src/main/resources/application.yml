@@ -1,3 +1,3 @@
 spring:
   profiles:
-    active: docker   #  docker, local
+    active: test   #  docker, local , test

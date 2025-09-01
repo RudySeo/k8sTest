@@ -42,5 +42,5 @@ class BoardController(
 
         return ResponseEntity.status(HttpStatus.OK).body(boardService.getBoard(id))
     }
-
+    
 }
