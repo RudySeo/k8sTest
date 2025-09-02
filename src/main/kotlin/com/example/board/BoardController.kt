@@ -1,5 +1,7 @@
 package com.example.board
 
+import com.example.board.kafka.BoardKafkaPublisher
+import com.example.board.kafka.dto.TestDto
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -7,12 +9,17 @@ import org.springframework.web.bind.annotation.*
 @RestController
 class BoardController(
     private val boardService: BoardService,
+    private val publisher: BoardKafkaPublisher
 ) {
 
     @PostMapping("/board")
-    fun createBoard(@RequestBody request: BoardDto.BoardRequest): ResponseEntity<BoardDto.BoardResponse> {
+    fun createBoard(@RequestBody dto: TestDto): ResponseEntity<String> {
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(boardService.createBoard(request))
+//        boardKafkaPublisher.publish(request)
+        publisher.sendMessage(dto)
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body("Board 생성 요청이 Kafka에 전달되었습니다.")
     }
 
     @PutMapping("/board/{id}")
@@ -42,5 +49,5 @@ class BoardController(
 
         return ResponseEntity.status(HttpStatus.OK).body(boardService.getBoard(id))
     }
-    
+
 }
