@@ -37,6 +37,8 @@ dependencies {
 
     // Micrometer Prometheus Registry
     implementation("io.micrometer:micrometer-registry-prometheus")
+    //spring-kafka
+    implementation 'org.springframework.kafka:spring-kafka'
 }
 
 kotlin {
