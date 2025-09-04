@@ -14,8 +14,6 @@ class BoardController(
 
     @PostMapping("/board")
     fun createBoard(@RequestBody dto: TestDto): ResponseEntity<String> {
-
-//        boardKafkaPublisher.publish(request)
         publisher.sendMessage(dto)
         return ResponseEntity
             .status(HttpStatus.CREATED)
