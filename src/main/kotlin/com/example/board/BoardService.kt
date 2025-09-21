@@ -1,6 +1,5 @@
 package com.example.board
 
-import com.example.board.kafka.BoardKafkaPublisher
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -9,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class BoardService(
     private val boardRepository: BoardRepository,
-    private val kafkaPublisher: BoardKafkaPublisher
 ) {
 
     fun createBoard(request: BoardDto.BoardRequest): BoardDto.BoardResponse {
@@ -24,6 +22,7 @@ class BoardService(
 
         return BoardDto.BoardResponse.from(saved)
     }
+
 
     fun updateBoard(id: Long, request: BoardDto.BoardRequest): BoardDto.BoardResponse {
 
@@ -46,12 +45,14 @@ class BoardService(
         return boardRepository.delete(board)
     }
 
+    @Transactional(readOnly = true)
     fun getBoards(): List<BoardDto.BoardResponse> {
         val boards = boardRepository.findAll()
 
         return boards.map { BoardDto.BoardResponse.from(it) }
     }
 
+    @Transactional(readOnly = true)
     fun getBoard(id: Long): BoardDto.BoardResponse {
         val board = boardRepository.findById(id).orElseThrow() {
             throw NotFoundException()
