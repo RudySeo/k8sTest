@@ -39,6 +39,10 @@ dependencies {
     implementation("io.micrometer:micrometer-registry-prometheus")
     //spring-kafka
     implementation 'org.springframework.kafka:spring-kafka'
+    //logstash-logback-encoder
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.4'
+    //log
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
 }
 
 kotlin {
