@@ -1,0 +1,20 @@
+<configuration>
+  <property name="LOG_PATH" value="./docker/app/logs"/>
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_PATH}/application.json</file>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_PATH}/application-%d{yyyy-MM-dd}.json</fileNamePattern>
+      <maxHistory>7</maxHistory>
+    </rollingPolicy>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="FILE"/>
+  </root>
+</configuration>
+
+
+
+
