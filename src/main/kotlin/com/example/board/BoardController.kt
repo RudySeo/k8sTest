@@ -2,18 +2,22 @@ package com.example.board
 
 import com.example.board.kafka.BoardKafkaPublisher
 import com.example.board.kafka.dto.TestDto
+import mu.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+
 
 @RestController
 class BoardController(
     private val boardService: BoardService,
     private val publisher: BoardKafkaPublisher
 ) {
+    private val log = KotlinLogging.logger {}
 
     @PostMapping("/board")
     fun createBoard(@RequestBody dto: TestDto): ResponseEntity<String> {
+        log.info { "📩 Board 생성 요청 수신: $dto" }
         publisher.sendMessage(dto)
         return ResponseEntity
             .status(HttpStatus.CREATED)
