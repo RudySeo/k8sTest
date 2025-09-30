@@ -20,6 +20,7 @@ class BoardController(
             .body("Board 생성 요청이 Kafka에 전달되었습니다.")
     }
 
+    //템플릿테스트
     @PutMapping("/board/{id}")
     fun updateBoard(
         @PathVariable id: Long,
